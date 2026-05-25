@@ -81,29 +81,29 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 p-6 md:p-12 font-sans text-slate-800 flex flex-col">
-      <header className="mb-8 flex items-center gap-4">
+    <div className="min-h-screen bg-black p-6 md:p-12 font-sans text-white flex flex-col">
+      <header className="mb-8 flex justify-center items-center gap-4">
         <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="Pokeball" className="w-12 h-12" />
         <h1 className="text-4xl font-extrabold">Pokemon Explorer</h1>
       </header>
 
-      <div className="mb-8 space-y-6">
+      <div className="mb-12 flex flex-col items-center space-y-6 w-full mt-4">
         <input
           type="text"
           placeholder="Search Pokemon..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full max-w-md px-4 py-3 rounded-xl border border-slate-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full max-w-2xl px-6 py-4 rounded-2xl border-2 border-slate-800 shadow-md focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all text-lg text-center bg-slate-900 text-white placeholder-slate-500"
         />
 
-        <div className="flex flex-wrap gap-2">
+        <div className="flex w-full gap-1 md:gap-2 justify-between">
           {types?.map((type: string) => (
             <button
               key={type}
               onClick={() => toggleType(type)}
               style={{ backgroundColor: typeColors[type] || '#ccc' }}
-              className={`px-4 py-1.5 rounded-full text-white font-semibold capitalize transition-all ${
-                selectedTypes.includes(type) ? 'ring-4 ring-offset-2 ring-slate-400 scale-105' : 'opacity-70 hover:opacity-100'
+              className={`flex-1 px-1 py-1 sm:py-1.5 text-[9px] sm:text-[10px] md:text-xs rounded-full text-white font-bold capitalize transition-all shadow-sm border border-white/10 truncate ${
+                selectedTypes.includes(type) ? 'ring-2 ring-offset-1 ring-offset-black ring-slate-400 scale-105' : 'opacity-75 hover:opacity-100 hover:-translate-y-0.5'
               }`}
             >
               {type}
@@ -112,8 +112,8 @@ function App() {
         </div>
       </div>
 
-      {isListLoading && <p className="text-xl font-semibold mb-4">Ładowanie Pokedexu...</p>}
-      {isListError && <p className="text-xl text-red-500 font-semibold mb-4">Błąd połączenia z API.</p>}
+      {isListLoading && <p className="text-xl font-semibold mb-4 text-center">Ładowanie Pokedexu...</p>}
+      {isListError && <p className="text-xl text-red-400 font-semibold mb-4 text-center">Błąd połączenia z API.</p>}
 
       <main className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-10 flex-grow">
         {displayPokemons.map((pokemon: any) => (
@@ -121,7 +121,7 @@ function App() {
             key={pokemon.id} 
             onClick={() => setSelectedPokemon(pokemon)}
             style={getBackgroundStyle(pokemon.types)}
-            className="rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 p-6 flex flex-col items-center border border-slate-100 text-white cursor-pointer"
+            className="rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 p-6 flex flex-col items-center border border-white/5 text-white cursor-pointer"
           >
             <span className="font-bold self-start mb-2 opacity-80">#{String(pokemon.id).padStart(3, '0')}</span>
             <img 
@@ -140,7 +140,7 @@ function App() {
           </article>
         ))}
         {displayPokemons.length === 0 && !isListLoading && (
-          <p className="col-span-full text-lg text-slate-500">Nie znaleziono pokemona.</p>
+          <p className="col-span-full text-lg text-slate-500 text-center">Nie znaleziono pokemona.</p>
         )}
       </main>
 
@@ -148,7 +148,7 @@ function App() {
         <button
           onClick={() => fetchNextPage()}
           disabled={isFetchingNextPage}
-          className="mx-auto block px-8 py-3 bg-slate-800 text-white font-bold rounded-xl hover:bg-slate-700 disabled:opacity-50 transition-colors"
+          className="mx-auto block px-8 py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 disabled:opacity-50 transition-colors shadow-md"
         >
           {isFetchingNextPage ? 'Ładowanie...' : 'Load More'}
         </button>
